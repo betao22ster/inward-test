@@ -1,6 +1,6 @@
-package br.com.inward.test.controle;
+package br.com.inward.test.controle.html;
 
-class HtmlFormat {
+public class HtmlFormat {
 	private StringBuilder htmlRetorno = new StringBuilder();
 	private int contErro;
 	private int contAcertos;
@@ -25,7 +25,7 @@ class HtmlFormat {
 		htmlRetornoTmp.append(" - ");
 		htmlRetornoTmp.append(contAcertos);
 		htmlRetornoTmp.append("/");
-		htmlRetornoTmp.append(contErro);
+		htmlRetornoTmp.append(contErro+contAcertos);
 		
 		/*
 		if( contAcertos+contErro > 0 ){

@@ -5,6 +5,7 @@ import java.lang.reflect.Method;
 import java.util.List;
 
 import br.com.inward.test.controle.bean.ControleBean;
+import br.com.inward.test.controle.html.HtmlFormat;
 
 public class ExecutarTestes {
 
@@ -25,10 +26,14 @@ public class ExecutarTestes {
 
 		executarListaOrganizada();
 		
-		return htmlRetorno.toString();
+		return getRetornoHtml();
 	}
 
-	private void executarListaOrganizada() {
+	protected String getRetornoHtml(){
+		return htmlRetorno.toString();
+	}
+	
+	protected void executarListaOrganizada() {
 		
 		for (ControleBean item : listaOrganizada) {
 			
@@ -37,10 +42,10 @@ public class ExecutarTestes {
 			htmlRetorno.append("Testando class....".concat(item.getClasse().getName()));
 			
 			try {
-				executeMetodo(objetoCriado, item.getMetodoBefore());
+				executeMetodo(objetoCriado, item.getMetodoBefore(), true);
 			} catch (Exception e) {
 				e.printStackTrace();
-				htmlRetorno.append(item.getMetodoBefore().getName(), false, e.getMessage());
+				//htmlRetorno.append(item.getMetodoBefore().getName(), false, e.getMessage());
 			}
 			
 			for( Integer pos : item.getOrdemMetodos().keySet() ){
@@ -67,11 +72,20 @@ public class ExecutarTestes {
 	private void executeMetodo(Object objetoCriado, Method metodo)
 			throws IllegalAccessException, InvocationTargetException {
 		
+		executeMetodo(objetoCriado, metodo, false);
+		
+	}
+	
+	private void executeMetodo(Object objetoCriado, Method metodo, boolean isSemLog)
+			throws IllegalAccessException, InvocationTargetException {
+		
 		boolean isExecutar = false;
 		
 		if( metodosFilter == null ){
 			metodo.invoke(objetoCriado, null);
-			htmlRetorno.append(metodo.getName(), true);
+			if( !isSemLog ){
+				htmlRetorno.append(metodo.getName(), true);
+			}
 			return;
 		}
 		
@@ -91,7 +105,9 @@ public class ExecutarTestes {
 		}
 		
 		metodo.invoke(objetoCriado, null);
-		htmlRetorno.append(metodo.getName(), true);
+		if( !isSemLog ){
+			htmlRetorno.append(metodo.getName(), true);
+		}
 	}
 
 	private Object criarClasseTeste(Class classe) {
@@ -104,6 +120,8 @@ public class ExecutarTestes {
 		}
 	}
 	
-	
+	protected List<ControleBean> getListaOrganizada(){
+		return listaOrganizada;
+	}
 	
 }
