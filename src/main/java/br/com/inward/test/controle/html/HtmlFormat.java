@@ -1,5 +1,8 @@
 package br.com.inward.test.controle.html;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class HtmlFormat {
 	private StringBuilder htmlRetorno = new StringBuilder();
 	private int contErro;
@@ -69,6 +72,17 @@ public class HtmlFormat {
 		htmlRetorno.append("<tr bgcolor='").append(status ? "#98FB98" : "#FA8072").append("'>");
 		htmlRetorno.append("<td>").append(acao).append("</td>");
 		htmlRetorno.append("<td colspan='2'>").append(status ? "OK" : "Erro").append("</td>");
+		htmlRetorno.append("</tr>");
+		
+		controleContagem(status);
+	}
+	
+	public void append(String acao, boolean status, long tempoExecCodigo){
+		htmlRetorno.append("<tr bgcolor='").append(status ? "#98FB98" : "#FA8072").append("'>");
+		htmlRetorno.append("<td>").append(acao).append("</td>");
+		htmlRetorno.append("<td colspan='2'>").append(status ? "OK" : "Erro").append("</td>");
+		htmlRetorno.append("<td>").append( String.format( "%.3f ms%n", (tempoExecCodigo / 1000d) ) ).append("</td>");
+		
 		htmlRetorno.append("</tr>");
 		
 		controleContagem(status);

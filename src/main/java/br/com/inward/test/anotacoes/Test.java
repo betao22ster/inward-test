@@ -10,4 +10,5 @@ import java.lang.annotation.Target;
 public @interface Test {
 	// pode ser definido a ordem da execução
 	int ordem() default -1;
+	boolean disabilitar() default false;
 }

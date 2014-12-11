@@ -28,10 +28,12 @@ class OrganizarClasse {
 			
 			if (method.isAnnotationPresent(br.com.inward.test.anotacoes.Test.class)) {
 				Test teste = method.getAnnotation(Test.class);
-				bean.addMetodo(teste.ordem(), method);
+				if( !teste.disabilitar() ){
+					bean.addMetodo(teste.ordem(), method);
+				}
 			}
 		}
-
+		
 		return bean;
 	}
 

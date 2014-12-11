@@ -4,6 +4,8 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.List;
 
+import org.junit.BeforeClass;
+
 import br.com.inward.test.controle.bean.ControleBean;
 import br.com.inward.test.controle.html.HtmlFormat;
 
@@ -81,11 +83,8 @@ public class ExecutarTestes {
 		
 		boolean isExecutar = false;
 		
-		if( metodosFilter == null ){
-			metodo.invoke(objetoCriado, null);
-			if( !isSemLog ){
-				htmlRetorno.append(metodo.getName(), true);
-			}
+		if( metodosFilter == null || metodo.isAnnotationPresent(BeforeClass.class) ){
+			execMetodo(objetoCriado, metodo, isSemLog);
 			return;
 		}
 		
@@ -104,9 +103,20 @@ public class ExecutarTestes {
 			return;
 		}
 		
+		execMetodo(objetoCriado, metodo, isSemLog);
+	}
+
+	private void execMetodo(Object objetoCriado, Method metodo, boolean isSemLog)
+			throws IllegalAccessException, InvocationTargetException {
+		
+		long tempoInicial = System.currentTimeMillis();  
+		
 		metodo.invoke(objetoCriado, null);
+		
+		long tempoFinal = System.currentTimeMillis();  
+		
 		if( !isSemLog ){
-			htmlRetorno.append(metodo.getName(), true);
+			htmlRetorno.append(metodo.getName(), true, tempoFinal);
 		}
 	}
 
