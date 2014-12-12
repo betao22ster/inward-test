@@ -4,13 +4,21 @@ import java.lang.reflect.Method;
 import java.util.Map;
 import java.util.TreeMap;
 
+/**
+ * 
+ * @since 12/12/2014
+ * @author Marcelo de Souza Vieira
+ * @changelog
+ */
 public class ControleBean {
 
+	@SuppressWarnings("rawtypes")
 	private Class classe;
 	private Map<Integer, Method> ordemMetodos;
 	private int geradorOrdem = 9999;
 	private Method metodoBefore;
 	
+	@SuppressWarnings("rawtypes")
 	public ControleBean(Class classe) {
 		super();
 		this.classe = classe;
@@ -33,6 +41,7 @@ public class ControleBean {
 	}
 
 	
+	@SuppressWarnings("rawtypes")
 	public Class getClasse() {
 		return classe;
 	}

@@ -11,7 +11,19 @@ import javax.servlet.http.HttpServletResponse;
 import br.com.inward.test.controle.ExecutarTestes;
 import br.com.inward.test.controle.ExibirTestes;
 
-
+/**
+ * 
+ * <p>
+ * Servlet principal que inicia toda as execuções de teste.
+ * </p>
+ * <p>
+ * Este servlet deve ser adicionar no web.xml da aplicação que for utilizada para rodar os testes unitários.
+ * </p>
+ * 
+ * @since 12/12/2014
+ * @author Marcelo de Souza Vieira
+ * @changelog
+ */
 public class InWardServlet extends HttpServlet {
 	private static final long serialVersionUID = 193193439700309869L;
 
@@ -23,44 +35,65 @@ public class InWardServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		
-		if( "S".equals(req.getParameter(PAR_EXIBIR_TELA))){
-			executeTelaExibicao(resp);
-			return;
-		}
-		
-		execute(resp, req.getParameter(PAR_CLASSES), req.getParameter(PAR_METODOS));
+		controleExecusao(req, resp);
 	}
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 
+		controleExecusao(req, resp);
+	}
+
+	/**
+	 * 
+	 * <p>
+	 * Método de controle que identifica qual é a execução.
+	 * Identifica também os parâmetros que foram enviados.
+	 * </p>
+	 *
+	 * @param req
+	 * @param resp
+	 * @throws IOException
+	 * @since 12/12/2014
+	 * @author Marcelo de Souza Vieira
+	 * @changelog
+	 */
+	private void controleExecusao(HttpServletRequest req,
+			HttpServletResponse resp) throws IOException {
+		
 		if( "S".equals(req.getParameter(PAR_EXIBIR_TELA))){
-			executeTelaExibicao(resp);
+			execute(resp, new ExibirTestes());
+			return;
+		}
+
+		String classes = req.getParameter(PAR_CLASSES);
+		String metodos = req.getParameter(PAR_METODOS);
+		
+		if( (classes==null && metodos==null) || ("".equals(classes) && "".equals(metodos) ) ){
+			execute(resp, new ExibirTestes());
 			return;
 		}
 		
-		execute(resp, req.getParameter(PAR_CLASSES), req.getParameter(PAR_METODOS));
+		execute(resp, new ExecutarTestes(classes, metodos));
 	}
 	
-	private void executeTelaExibicao(HttpServletResponse resp) throws IOException{
-		System.out.println("servlet...");
-		
-		String html =  new ExibirTestes().execute();
-		
-		PrintWriter out = resp.getWriter();
-
-        out.println("<html>");
-        out.println("<body>");
-        out.println(html);
-        out.println("</body>");
-        out.println("</html>");
-	}
-	
-	private void execute(HttpServletResponse resp, String classes, String metodos) throws IOException{
-		System.out.println("servlet...");
-		
-		String html =  new ExecutarTestes(classes, metodos).execute();
+	/**
+	 * 
+	 * <p>
+	 * Método privado que executa e retorna a resposta no formato HTML.
+	 * É chamado pelo servlet.
+	 * </p>
+	 *
+	 * @param resp
+	 * @param execucao
+	 * @throws IOException
+	 * @since 12/12/2014
+	 * @author Marcelo de Souza Vieira
+	 * @changelog
+	 */
+	private void execute(HttpServletResponse resp, ExecutarTestes execucao) throws IOException{
+		String html = execucao.execute();
 		
 		PrintWriter out = resp.getWriter();
 

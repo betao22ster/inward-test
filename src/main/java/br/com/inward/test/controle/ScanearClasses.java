@@ -5,6 +5,12 @@ import java.util.List;
 import br.com.inward.test.controle.filtro.FiltroClasses;
 import br.com.inward.test.scanner.InWardCPScanner;
 
+/**
+ * 
+ * @since 12/12/2014
+ * @author Marcelo de Souza Vieira
+ * @changelog
+ */
 public class ScanearClasses {
 	
 	private final static ScanearClasses instancia = new ScanearClasses();
@@ -21,33 +27,5 @@ public class ScanearClasses {
 		List<Class<?>> classes = InWardCPScanner.scanClasses(FiltroClasses.getInstance().getFiltro(classesFilter));
 		
 		return classes;
-		
-		/*for(Class<?> clazz: classes){
-		   Method[] metodos = clazz.getMethods();
-		   for (Method method : metodos) {
-			   if( method.isAnnotationPresent(br.com.inward.test.anotacoes.Test.class) ){
-				   Object x;
-				try {
-					x = clazz.newInstance();
-					System.out.println("Executando teste...");
-					method.invoke(x, null);
-				} catch (InstantiationException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (IllegalAccessException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (IllegalArgumentException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (InvocationTargetException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				   
-			   }
-		   }
-		}
-		*/
 	}
 }

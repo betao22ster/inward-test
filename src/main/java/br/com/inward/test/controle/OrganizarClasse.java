@@ -7,10 +7,18 @@ import org.junit.BeforeClass;
 import br.com.inward.test.anotacoes.Test;
 import br.com.inward.test.controle.bean.ControleBean;
 
+/**
+ * 
+ * @since 12/12/2014
+ * @author Marcelo de Souza Vieira
+ * @changelog
+ */
 class OrganizarClasse {
 
+	@SuppressWarnings("rawtypes")
 	private Class clazz;
 
+	@SuppressWarnings("rawtypes")
 	public OrganizarClasse(Class clazz) {
 		this.clazz = clazz;
 	}

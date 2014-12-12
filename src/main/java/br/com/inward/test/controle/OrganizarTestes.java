@@ -5,6 +5,12 @@ import java.util.List;
 
 import br.com.inward.test.controle.bean.ControleBean;
 
+/**
+ * 
+ * @since 12/12/2014
+ * @author Marcelo de Souza Vieira
+ * @changelog
+ */
 class OrganizarTestes {
 
 	private List<Class<?>> classesTeste;
@@ -13,6 +19,7 @@ class OrganizarTestes {
 		this.classesTeste = classesTeste;
 	}
 	
+	@SuppressWarnings("rawtypes")
 	public List<ControleBean> getClassesOrganizadas(){
 		
 		List<ControleBean> lista = new ArrayList<ControleBean>();
