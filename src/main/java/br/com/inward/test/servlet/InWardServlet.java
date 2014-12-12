@@ -17,7 +17,7 @@ public class InWardServlet extends HttpServlet {
 
 	private final static String PAR_CLASSES = "classes";  
 	private final static String PAR_METODOS = "metodos";
-	private final static String PAR_EXIBIR_TELA = "exibirErros";
+	private final static String PAR_EXIBIR_TELA = "exibirTestes";
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)

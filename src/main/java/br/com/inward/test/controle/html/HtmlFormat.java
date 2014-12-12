@@ -1,55 +1,100 @@
 package br.com.inward.test.controle.html;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 public class HtmlFormat {
 	private StringBuilder htmlRetorno = new StringBuilder();
 	private int contErro;
 	private int contAcertos;
 	
-	public HtmlFormat() {
-		htmlRetorno.append("<table>");
-		htmlRetorno.append("<tr bgcolor='#EEE9E9'><th>Ação</th><th>Status</th><th>Msg</th></tr>");
+	
+	
+	private void compilarHtml(){
+		// guardando os dados já incluidos
+		StringBuilder tmp = htmlRetorno;
+		
+		htmlRetorno = new StringBuilder();
+
+		cabecalho();
+		inicioRelatorio();
+		
+		htmlRetorno.append(tmp);
+		
+		finalTabela();
+	
 	}
 	
+	private void inicioRelatorio() {
+		htmlRetorno.append("<table width='100%' border='0'>");
+		htmlRetorno.append("<tr><th width='50%'>");
+		
+		htmlRetorno.append("<table>");
+		htmlRetorno.append("<tr bgcolor='#EEE9E9'><th>Ação</th><th>Status</th><th>Msg</th></tr>");
+		
+	}
+
 	private void finalTabela(){
+		htmlRetorno.append("</table>");
+		
+		htmlRetorno.append("</th><th>");
+		
+		gerarGrafico();
+		
+		htmlRetorno.append("</th></tr>");
 		htmlRetorno.append("</table>");
 	}
 
-	private void finalizandoFormatacao(){
+	private void gerarGrafico() {
+		StringBuilder grafico = new StringBuilder();
+		grafico.append("  <div id=\"piechart\" style=\"width: 900px; height: 500px;\"></div> \n");
 		
-		StringBuilder htmlRetornoTmp = new StringBuilder();
 		
-		htmlRetornoTmp.append("<table>");
-		htmlRetornoTmp.append("<tr><th>");
-		htmlRetornoTmp.append("Resultado do teste:  ");
-		htmlRetornoTmp.append(contErro > 0 ? "ERRO" : "SUCESSO");
-		htmlRetornoTmp.append(" - ");
-		htmlRetornoTmp.append(contAcertos);
-		htmlRetornoTmp.append("/");
-		htmlRetornoTmp.append(contErro+contAcertos);
+		grafico.append("<script type=\"text/javascript\" src=\"https://www.google.com/jsapi\"></script> \n");
+		grafico.append("<script type=\"text/javascript\"> \n\n\n");
 		
-		/*
-		if( contAcertos+contErro > 0 ){
-			
-			htmlRetornoTmp.append(" - ");
-			if( contAcertos > 0 ){
-				htmlRetornoTmp.append((100 / contAcertos)  * (contAcertos+contErro));
-			}else{
-				htmlRetornoTmp.append("0");
-			}
-			htmlRetornoTmp.append("%");
-		}
-		*/
+		grafico.append("   google.load(\"visualization\", \"1\", {packages:[\"corechart\"]}); \n\n\n");
 		
-		htmlRetornoTmp.append("</th></tr>");
-		htmlRetornoTmp.append("<table><BR>");
+		grafico.append("  function drawChart() { \n");
+		grafico.append("       var data = google.visualization.arrayToDataTable([ \n");
+		grafico.append("        ['Stats', 'Speakers (in millions)'], \n");
+		grafico.append("        ['Sucesso',  ").append(contAcertos).append("], \n");
+		grafico.append("        ['Erro',  ").append(contErro).append("] \n");
+		grafico.append("      ]); \n\n\n");
+
+		grafico.append("    var options = { \n");
+		grafico.append("      legend: 'none', \n");
+		grafico.append("      pieSliceText: 'label',\n ");
+		grafico.append("      title: 'inward-test unit', \n");
+		grafico.append("      pieStartAngle: 100, \n");
+		grafico.append("    }; \n\n\n ");
+
+		grafico.append("      var chart = new google.visualization.PieChart(document.getElementById('piechart')); \n\n\n");
+		grafico.append("      chart.draw(data, options); \n\n\n");
 		
-		finalTabela();
+		grafico.append("    } \n");
 		
-		htmlRetornoTmp.append(htmlRetorno);
-		htmlRetorno = htmlRetornoTmp;
+		
+		grafico.append(" window.onload = drawChart; \n");
+		
+		grafico.append("  </script> \n");
+	      
+		htmlRetorno.append(grafico);
+	}
+
+	private void cabecalho(){
+		
+		htmlRetorno.append("<table>");
+		htmlRetorno.append("<tr><th>");
+		htmlRetorno.append("Resultado do teste:  ");
+		htmlRetorno.append(contErro > 0 ? "ERRO" : "SUCESSO");
+		htmlRetorno.append(" - ");
+		htmlRetorno.append(contAcertos);
+		htmlRetorno.append("/");
+		htmlRetorno.append(contErro+contAcertos);
+		
+		htmlRetorno.append("</th></tr>");
+		htmlRetorno.append("<table><BR>");
+		
+		
 	}
 	
 	public void append(String acao){
@@ -98,7 +143,7 @@ public class HtmlFormat {
 
 	@Override
 	public String toString() {
-		finalizandoFormatacao();
+		compilarHtml();
 		
 		return htmlRetorno.toString();
 	}

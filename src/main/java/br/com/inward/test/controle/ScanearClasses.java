@@ -2,8 +2,8 @@ package br.com.inward.test.controle;
 
 import java.util.List;
 
-import net.sf.corn.cps.CPScanner;
 import br.com.inward.test.controle.filtro.FiltroClasses;
+import br.com.inward.test.scanner.InWardCPScanner;
 
 public class ScanearClasses {
 	
@@ -18,7 +18,7 @@ public class ScanearClasses {
 	
 	public List<Class<?>> getClasses(String[] classesFilter){
 		
-		List<Class<?>> classes = CPScanner.scanClasses(FiltroClasses.getInstance().getFiltro(classesFilter));
+		List<Class<?>> classes = InWardCPScanner.scanClasses(FiltroClasses.getInstance().getFiltro(classesFilter));
 		
 		return classes;
 		
