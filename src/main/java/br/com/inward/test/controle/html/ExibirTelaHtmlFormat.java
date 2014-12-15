@@ -1,5 +1,7 @@
 package br.com.inward.test.controle.html;
 
+import br.com.inward.test.util.ClassesUtils;
+
 public class ExibirTelaHtmlFormat {
 	private StringBuilder htmlRetorno = new StringBuilder();
 
@@ -7,22 +9,24 @@ public class ExibirTelaHtmlFormat {
 		htmlRetorno.append("<table>");
 	}
 
-	public void appendClasse(String classe) {
+	@SuppressWarnings("rawtypes")
+	public void appendClasse(Class classe) {
 		htmlRetorno.append("<tr bgcolor='#EEE9E9'>");
-		htmlRetorno.append("<td colsnpan='2'>");
-		htmlRetorno.append(classe);
+		htmlRetorno.append("<td>");
+		htmlRetorno.append(ClassesUtils.getNomeClasseOrNomeAnota(classe));
+		htmlRetorno.append("<br>");
+		htmlRetorno.append(ClassesUtils.getDescricaoClasse(classe));
+		htmlRetorno.append("</td>");
+		htmlRetorno.append("<td>");
+		htmlRetorno.append("<a href='InWardExec?classes=");
+		htmlRetorno.append(ClassesUtils.getNomeClasse(classe));
+		htmlRetorno.append("' target='_blank'>Executar</a>");
 		htmlRetorno.append("</td>");
 		htmlRetorno.append("</tr>");
 	}
 
-	public void appendMetodo(String classe, String metodo) {
-		
-		String[] sep = classe.split("\\.");
-
-		String nome = null;
-		if( sep != null ){
-			nome = sep[sep.length-1];
-		}
+	@SuppressWarnings("rawtypes")
+	public void appendMetodo(Class classe, String metodo) {
 		
 		htmlRetorno.append("<tr bgcolor='#98FB98'>");
 		htmlRetorno.append("<td>");
@@ -30,7 +34,7 @@ public class ExibirTelaHtmlFormat {
 		htmlRetorno.append("</td>");
 		htmlRetorno.append("<td>");
 		htmlRetorno.append("<a href='InWardExec?classes=");
-		htmlRetorno.append(nome);
+		htmlRetorno.append(ClassesUtils.getNomeClasse(classe));
 		htmlRetorno.append("&metodos=");
 		htmlRetorno.append(metodo);
 		htmlRetorno.append("' target='_blank'>Executar</a>");

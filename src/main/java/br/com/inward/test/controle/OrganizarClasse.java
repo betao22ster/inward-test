@@ -36,7 +36,7 @@ class OrganizarClasse {
 			
 			if (method.isAnnotationPresent(br.com.inward.test.anotacoes.Test.class)) {
 				Test teste = method.getAnnotation(Test.class);
-				if( !teste.disabilitar() ){
+				if( !teste.desabilitar() ){
 					bean.addMetodo(teste.ordem(), method);
 				}
 			}

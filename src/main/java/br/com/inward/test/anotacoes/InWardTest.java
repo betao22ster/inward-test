@@ -18,5 +18,6 @@ import java.lang.annotation.RetentionPolicy;
 public @interface InWardTest {
 	
 	String nome() default "";
+	String descricao() default "";
 	
 }

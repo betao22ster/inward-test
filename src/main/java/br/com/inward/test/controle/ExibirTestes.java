@@ -17,11 +17,11 @@ public class ExibirTestes extends ExecutarTestes {
 	protected void executarListaOrganizada() {
 		
 		for (ControleBean item : getListaOrganizada()) {
-			htmlFormat.appendClasse(item.getClasse().getName());
+			htmlFormat.appendClasse(item.getClasse());
 			
 			for( Integer pos : item.getOrdemMetodos().keySet() ){
 				Method metodo = item.getOrdemMetodos().get(pos);
-				htmlFormat.appendMetodo(item.getClasse().getName(), metodo.getName());
+				htmlFormat.appendMetodo(item.getClasse(), metodo.getName());
 			}
 		}
 	}
