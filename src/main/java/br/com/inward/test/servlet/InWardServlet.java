@@ -30,6 +30,7 @@ public class InWardServlet extends HttpServlet {
 	private final static String PAR_CLASSES = "classes";  
 	private final static String PAR_METODOS = "metodos";
 	private final static String PAR_EXIBIR_TELA = "exibirTestes";
+	private final static String PAR_EXECUTAR_ALL = "execall";
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
@@ -67,6 +68,12 @@ public class InWardServlet extends HttpServlet {
 			return;
 		}
 
+		
+		if( "S".equals(req.getParameter(PAR_EXECUTAR_ALL))){
+			execute(resp, new ExecutarTestes(null, null));
+			return;
+		}
+		
 		String classes = req.getParameter(PAR_CLASSES);
 		String metodos = req.getParameter(PAR_METODOS);
 		

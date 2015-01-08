@@ -1,5 +1,9 @@
 package br.com.inward.test.controle.html;
 
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
+import java.rmi.server.LogStream;
+
 
 public class HtmlFormat {
 	private StringBuilder htmlRetorno = new StringBuilder();
@@ -107,7 +111,7 @@ public class HtmlFormat {
 		htmlRetorno.append("<tr bgcolor='").append(status ? "#98FB98" : "#FA8072").append("'>");
 		htmlRetorno.append("<td>").append(acao).append("</td>");
 		htmlRetorno.append("<td>").append(status ? "OK" : "Erro").append("</td>");
-		htmlRetorno.append("<td>").append(msg).append("</td>");
+		htmlRetorno.append("<td>").append(msg).append("<br>").append("</td>");
 		htmlRetorno.append("</tr>");
 		
 		controleContagem(status);

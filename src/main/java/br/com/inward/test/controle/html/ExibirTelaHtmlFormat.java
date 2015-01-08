@@ -48,7 +48,7 @@ public class ExibirTelaHtmlFormat {
 
 		htmlRetornoTmp.append("<table>");
 		htmlRetornoTmp.append("<tr><th>");
-		htmlRetornoTmp.append(" <a href='InWardExec' target='_blank'> ++ Executar todos os teste ++ </a> ");
+		htmlRetornoTmp.append(" <a href='InWardExec?execall=S' target='_blank'> ++ Executar todos os teste ++ </a> ");
 		htmlRetornoTmp.append("</th></tr>");
 		htmlRetornoTmp.append("<table><BR>");
 		
